@@ -2,6 +2,8 @@ import 'isomorphic-fetch'
 
 const endpointBase = 'http://localhost:8080'
 
+const requestHeaders = new Headers({'Content-Type': 'application/json'})
+
 const requestMethods = {
   POST: "POST",
   GET: "GET",
@@ -15,7 +17,7 @@ const getDresses = async (pageSize = 50, pageNum = 0) => {
   const endpoint = `${endpointBase}/dresses?pageSize=${pageSize}&pageNum=${pageNum}`
   const res = await fetch(endpoint)
   const json = await res.json()
-  return json.items
+  return {items: json.items, pages: json.totalPages}
 }
 
 const getDress = async (id) => {
@@ -37,20 +39,20 @@ const addToHitlist = async (id, rating = 3) => {
   const body = {dress_id: id, rating}  
   const req = await fetch(endpoint, {
     method: requestMethods.POST,
-    headers: new Headers({
-      'Content-Type': 'application/json'
-    }),
+    headers: requestHeaders,
     body: JSON.stringify(body),
   })
   const res = await req.text()
   return res
 }
 
-const removeFromHitlist = async (id) => {
-  const endpoint = `${endpointBase}/hitlist/${id}`
-  const res = await fetch(endpoint, {
-    method: requestMethods.DELETE
+const removeFromHitlist = async (lineID) => {
+  const endpoint = `${endpointBase}/hitlist/lines/${lineID}`
+  const req = await fetch(endpoint, {
+    method: requestMethods.DELETE,
+    headers: requestHeaders
   })
+  const res = await req.text()
   return res
 }
 

@@ -3,6 +3,7 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import thunkMiddleware from 'redux-thunk'
 import dataMiddleware from '../middlewares/data'
 import actionTypes from  '../constants/actions'
+import { map } from 'lodash/fp'
 
 const initialState = {
   items: [],
@@ -13,23 +14,27 @@ const initialState = {
 // REDUCERS
 export const reducer = (state = initialState, action) => {
   let items = []
+  let hitlist = []
 
   switch (action.type) {
 
     case actionTypes.LOAD_ITEMS:
-      return Object.assign({}, state, {items: action.items})
+      items = action.items.map( item => {
+        if (map('dress_id', state.hitlist).indexOf(item.id) > -1) item.saved = true
+        return item
+      })
+      return Object.assign({}, state, {items: items})
     
-    case actionTypes.LOAD_HITLIST:
-      
+    case actionTypes.LOAD_HITLIST: 
       let list = action.list.reduce( (prev, current) => {
-        return prev.concat([current.dress_id])
+        return prev.concat([current])
       }, [])
       
       return Object.assign({}, state, {hitlist: list})
     
     case actionTypes.LOAD_ITEM:
       items = state.items.map( item => {
-        if (item.id === action.id) item.details = action.details
+        if (item.id === action.id) item = Object.assign({}, item, { details: action.details })
         return item
       })
       return Object.assign({}, state, {items: items})
@@ -49,8 +54,13 @@ export const reducer = (state = initialState, action) => {
       return Object.assign({}, state, {items: items})
     
     case actionTypes.SAVE_ITEM_HITLIST:
-      let newHitlist = state.hitlist.concat([action.details.dress_id])
-      return Object.assign({}, state, {hitlist: newHitlist})
+      hitlist = state.hitlist.concat([action.details])
+      return Object.assign({}, state, {hitlist: hitlist})
+
+    case actionTypes.DELETE_ITEM_HITLIST:
+      let index = map('dress_id', state.hitlist).indexOf(action.id)
+      hitlist = state.hitlist.slice(0,index).concat(state.hitlist.slice(index+1))
+      return Object.assign({}, state, {hitlist: hitlist})
 
     case actionTypes.VIEW_ITEM:
       items = state.items.map( item => {

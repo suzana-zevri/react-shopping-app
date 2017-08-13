@@ -5,11 +5,12 @@ const dataMiddleware = store => next => async (action) => {
 
   next(action)
 
+  const state = store.getState()
+
   switch (action.type) {
 
     case actionTypes.VIEW_ITEM:
       const item = await getDress(action.id)
-      console.log('view', item)
       next({ type: actionTypes.LOAD_ITEM, id:action.id, details: item })
       break
     
@@ -20,7 +21,14 @@ const dataMiddleware = store => next => async (action) => {
         next({ type: actionTypes.SAVE_ITEM_HITLIST, id:action.id, details })
       }
       break
-
+    
+    case actionTypes.REMOVE_ITEM:
+      const findItem = state.hitlist.find( (item) => {
+        return item.dress_id == action.id
+      })
+      const deletedItem = await removeFromHitlist(findItem.line_id)
+      next({ type: actionTypes.DELETE_ITEM_HITLIST, id:action.id })
+      break
     
     default:
       break
