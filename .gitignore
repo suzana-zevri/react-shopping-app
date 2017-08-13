@@ -1,0 +1,9 @@
+.next
+.vscode
+.dockerignore
+.eslintrc.yaml
+req.md
+.DS_Store
+node_modules/
+docker-compose.yml
+Dockerfile
