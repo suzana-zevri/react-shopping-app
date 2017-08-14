@@ -13,7 +13,12 @@ const dataMiddleware = store => next => async (action) => {
       const item = await getDress(action.id)
       next({ type: actionTypes.LOAD_ITEM, id:action.id, details: item })
       break
-    
+
+    case actionTypes.GET_SIMILAR:
+      const similar= await getSimilarDresses(action.id)
+      next({ type: actionTypes.LOAD_SIMILAR_ITEMS, id:action.id, {similar} })
+      break
+
     case actionTypes.SAVE_ITEM:
       const savedItem = await addToHitlist(action.id)
       const details = JSON.parse(savedItem)
@@ -21,7 +26,7 @@ const dataMiddleware = store => next => async (action) => {
         next({ type: actionTypes.SAVE_ITEM_HITLIST, id:action.id, details })
       }
       break
-    
+
     case actionTypes.REMOVE_ITEM:
       const findItem = state.hitlist.find( (item) => {
         return item.dress_id == action.id
@@ -29,7 +34,7 @@ const dataMiddleware = store => next => async (action) => {
       const deletedItem = await removeFromHitlist(findItem.line_id)
       next({ type: actionTypes.DELETE_ITEM_HITLIST, id:action.id })
       break
-    
+
     default:
       break
 

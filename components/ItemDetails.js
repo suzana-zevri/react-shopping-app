@@ -1,7 +1,7 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { closeItem, removeItem, saveItem } from '../reducers/main'
+import { closeItem, removeItem, saveItem, getSimilar} from '../reducers/main'
 import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label } from 'semantic-ui-react'
 
 class ItemDetail extends Component {
@@ -14,8 +14,14 @@ class ItemDetail extends Component {
       modalOpen: false,
     })
     this.props.closeItem(id)
-    
   }
+
+  handleGetSimilar = () => {
+    const id = this.props.item.id
+    this.props.getSimilar(id)
+  }
+
+
   render () {
     const item = this.props.item
     const details = item.details
@@ -23,7 +29,7 @@ class ItemDetail extends Component {
 
     let content = null
     if (details) {
-      content = 
+      content =
         <Modal.Content image scrolling>
           <Image wrapped size='medium' src={details.images[0]} />
           <Modal.Description>
@@ -35,6 +41,9 @@ class ItemDetail extends Component {
             <Label as='a' tag>{details.season}</Label>
             <Label as='a' color='pink'>Price: {details.price}€</Label>
           </Modal.Description>
+          <Button onClick={this.handleGetSimilar} color='pink'>
+             Similar dresses
+          </Button>
         </Modal.Content>
     } else {
       content = <Dimmer active><Loader active inverted/> </Dimmer>
@@ -66,7 +75,8 @@ const mapDispatchToProps = (dispatch) => {
   return {
     removeItem: bindActionCreators(removeItem, dispatch),
     saveItem: bindActionCreators(saveItem, dispatch),
-    closeItem: bindActionCreators(closeItem, dispatch)
+    closeItem: bindActionCreators(closeItem, dispatch),
+    getSimilar: bindActionCreators(getSimilar, dispatch)
   }
 }
 

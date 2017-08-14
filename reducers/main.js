@@ -24,14 +24,14 @@ export const reducer = (state = initialState, action) => {
         return item
       })
       return Object.assign({}, state, {items: items})
-    
-    case actionTypes.LOAD_HITLIST: 
+
+    case actionTypes.LOAD_HITLIST:
       let list = action.list.reduce( (prev, current) => {
         return prev.concat([current])
       }, [])
-      
+
       return Object.assign({}, state, {hitlist: list})
-    
+
     case actionTypes.LOAD_ITEM:
       items = state.items.map( item => {
         if (item.id === action.id) item = Object.assign({}, item, { details: action.details })
@@ -52,7 +52,7 @@ export const reducer = (state = initialState, action) => {
         return item
       })
       return Object.assign({}, state, {items: items})
-    
+
     case actionTypes.SAVE_ITEM_HITLIST:
       hitlist = state.hitlist.concat([action.details])
       return Object.assign({}, state, {hitlist: hitlist})
@@ -68,14 +68,14 @@ export const reducer = (state = initialState, action) => {
         return item
       })
       return  Object.assign({}, state, {items: items})
-    
+
     case actionTypes.CLOSE_ITEM:
       items = state.items.map( item => {
         if (item.id === action.id) item.selected = false
         return item
       })
       return  Object.assign({}, state, {items: items})
-    
+
     case actionTypes.RATE_ITEM:
       return state
 
@@ -98,23 +98,27 @@ export const removeItem = (id) => dispatch => {
 }
 
 export const saveItem = (id) => dispatch => {
-  return dispatch({ type: actionTypes.SAVE_ITEM, id: id })
+  return dispatch({ type: actionTypes.SAVE_ITEM, id })
 }
 
 export const rateItem = (id, rating) => dispatch => {
-  return dispatch({ type: actionTypes.ADD, id: id, rating: rating })
+  return dispatch({ type: actionTypes.ADD, id, rating })
 }
 
 export const loadItem = (id, details) => dispatch => {
-  return dispatch({ type: actionTypes.LOAD_ITEMS, id: id, details:details })
+  return dispatch({ type: actionTypes.LOAD_ITEMS, id, details })
 }
 
 export const loadItems = (items) => dispatch => {
-  return dispatch({ type: actionTypes.LOAD_ITEMS, items: items })
+  return dispatch({ type: actionTypes.LOAD_ITEMS, items })
 }
 
 export const loadHitlist = (list) => dispatch => {
-  return dispatch({ type: actionTypes.LOAD_HITLIST, list: list })
+  return dispatch({ type: actionTypes.LOAD_HITLIST, list })
+}
+
+export const getSimilar = (id) => dispatch => {
+  return dispatch({ type: actionTypes.GET_SIMILAR, id })
 }
 
 export const initStore = (initialState = initialState) => {
