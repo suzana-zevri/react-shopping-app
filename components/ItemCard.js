@@ -62,7 +62,7 @@ class ItemCard extends Component {
             <Button 
               floated='right' 
               color='pink' 
-              content='Details' 
+              content='View' 
             />
           </a>
         </Card.Content>

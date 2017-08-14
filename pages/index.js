@@ -3,10 +3,13 @@ import { bindActionCreators } from 'redux'
 import { initStore, loadItems, loadHitlist } from '../reducers/main'
 import withRedux from 'next-redux-wrapper'
 import Head from 'next/head';
-import ItemList from '../components/ItemList'
 import { getDresses, getHitlist } from '../dataservice/api'
+import { Grid } from 'semantic-ui-react'
+import ItemList from '../components/ItemList'
+import LeftNavigation from '../components/LeftNavigation'
+import RightNavigation from '../components/RightNavigation'
 
-const PAGE_SIZE = 16
+const PAGE_SIZE = 20
 
 class App extends React.Component {
 
@@ -28,10 +31,21 @@ class App extends React.Component {
           <link rel="stylesheet" href="/static/css/semantic.min.css" />
         </Head>
         <main>
-          <ItemList 
-            hitlist={this.props.hitlist} 
-            items={this.props.items} 
-          />
+          <Grid>
+            <Grid.Row>
+              <Grid.Column width={1} color='black'>
+                <LeftNavigation />
+              </Grid.Column>
+              <Grid.Column width={13}>
+                <ItemList 
+                  items={this.props.items} 
+                />
+              </Grid.Column>
+              <Grid.Column width={2} color='black'>
+                <RightNavigation size={this.props.hitlist.length} />
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
         </main>
       </section>
     )
