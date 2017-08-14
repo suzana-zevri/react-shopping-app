@@ -36,7 +36,7 @@ const getHitlist = async () => {
 
 const addToHitlist = async (id, rating = 3) => {
   const endpoint = `${endpointBase}/hitlist/lines`
-  const body = {dress_id: id, rating}  
+  const body = {dress_id: id, rating}
   const req = await fetch(endpoint, {
     method: requestMethods.POST,
     headers: requestHeaders,
