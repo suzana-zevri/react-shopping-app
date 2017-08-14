@@ -69,6 +69,13 @@ export const reducer = (state = initialState, action) => {
       })
       return  Object.assign({}, state, {items: items})
     
+    case actionTypes.CLOSE_ITEM:
+      items = state.items.map( item => {
+        if (item.id === action.id) item.selected = false
+        return item
+      })
+      return  Object.assign({}, state, {items: items})
+    
     case actionTypes.RATE_ITEM:
       return state
 
@@ -80,6 +87,10 @@ export const reducer = (state = initialState, action) => {
 // ACTIONS
 export const viewItem = (id) => dispatch => {
   return dispatch({ type: actionTypes.VIEW_ITEM, id: id })
+}
+
+export const closeItem = (id) => dispatch => {
+  return dispatch({ type: actionTypes.CLOSE_ITEM, id: id })
 }
 
 export const removeItem = (id) => dispatch => {

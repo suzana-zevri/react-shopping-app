@@ -2,12 +2,13 @@ import React from 'react'
 import { bindActionCreators } from 'redux'
 import { initStore, loadItems, loadHitlist } from '../reducers/main'
 import withRedux from 'next-redux-wrapper'
-import ItemCard from '../components/ItemCard'
+import Head from 'next/head';
+import ItemList from '../components/ItemList'
 import { getDresses, getHitlist } from '../dataservice/api'
 
-const PAGE_SIZE = 50
+const PAGE_SIZE = 16
 
-class ItemsList extends React.Component {
+class App extends React.Component {
 
   static async getInitialProps ({ store }) {
     const {items, pages} = await getDresses(PAGE_SIZE, 0)
@@ -18,18 +19,21 @@ class ItemsList extends React.Component {
   }
 
   render () {
-
     return (
-      <div>
-        <h1>Saved items</h1>
-        {this.props.hitlist.map( item => {
-          return <div key={item.line_id}>{item.dress_id}</div>
-        })}
-        <h2>All items</h2>
-        {this.props.items.map( item => {
-          return <ItemCard item={item} key={item.id} />
-        })}
-      </div>
+      <section>
+        <Head>
+          <title>Dresses Service</title>
+          <meta charSet="utf-8"/>
+          <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+          <link rel="stylesheet" href="/static/css/semantic.min.css" />
+        </Head>
+        <main>
+          <ItemList 
+            hitlist={this.props.hitlist} 
+            items={this.props.items} 
+          />
+        </main>
+      </section>
     )
   }
 }
@@ -43,4 +47,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(ItemsList)
+export default withRedux(initStore, mapStateToProps, mapDispatchToProps)(App)

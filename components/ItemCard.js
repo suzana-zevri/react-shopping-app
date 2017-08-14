@@ -2,8 +2,21 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { viewItem, removeItem, saveItem } from '../reducers/main'
+import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
 class ItemCard extends Component {
+
+  state = { currentImage: this.props.item.thumbnails[1] }
+
+  handleMouseOver = () => {
+     let currentImage = this.props.item.thumbnails[0]
+     this.setState({currentImage})
+  }
+
+  handleMouseOut = () => {
+     let currentImage = this.props.item.thumbnails[1]
+     this.setState({currentImage})
+  }
 
   handleClickView = () => {
     const id = this.props.item.id
@@ -25,24 +38,35 @@ class ItemCard extends Component {
 
     let itemAction = null
     if (item.saved) {
-      itemAction = <a onClick={this.handleClickRemove}>Remove</a>
+      itemAction = <a onClick={this.handleClickRemove}>
+        <Button basic color='red'>Remove</Button>
+      </a>
     } else {
-      itemAction = <a onClick={this.handleClickSave}>Save</a>
+      itemAction = <a onClick={this.handleClickSave}><Button basic color='blue'>Save</Button></a>
     }
 
     return (
-      <div>
-        <h1>{item.name}</h1>
-        <a onClick={this.handleClickView}>View</a>
-        {itemAction}
-        <h3>{item.brand_name}</h3>
-        <h4>{item.price}</h4>
-        <div>
-          {item.thumbnails.map( thumb => {
-            return <img key={thumb} src={thumb} />
-          })}
+      <Card>
+        {this.props.itemSelected}
+        <div onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
+          <Image src={this.state.currentImage} />
         </div>
-      </div>
+        <Card.Content>
+          <Card.Header> {item.name} </Card.Header>
+          <Card.Meta>{item.brand_name}</Card.Meta>
+          <Card.Description>{item.price}€</Card.Description>
+        </Card.Content>
+        <Card.Content extra>
+          {itemAction}
+          <a onClick={this.handleClickView}>
+            <Button 
+              floated='right' 
+              color='pink' 
+              content='Details' 
+            />
+          </a>
+        </Card.Content>
+      </Card>
     )
   }
 
