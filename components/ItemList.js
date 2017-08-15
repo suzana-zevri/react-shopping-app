@@ -8,7 +8,11 @@ export default ({items, activePage, onPageChange, totalPages}) => {
 
   return (
     <div>
-      <Pagination totalPages={totalPages} activePage={activePage} onChange={onPageChange}/>
+      <Pagination
+        totalPages={totalPages}
+        activePage={activePage}
+        onChange={onPageChange}
+      />
       <Divider />
       <Card.Group itemsPerRow='five' stackable>
         {items.map( item => {
@@ -22,7 +26,11 @@ export default ({items, activePage, onPageChange, totalPages}) => {
         })}
       </Card.Group>
       <Divider />
-      <Pagination totalPages={totalPages} activePage={activePage} onChange={onPageChange} />
+      <Pagination
+        totalPages={totalPages}
+        activePage={activePage}
+        onChange={onPageChange}
+      />
     </div>
   )
 }

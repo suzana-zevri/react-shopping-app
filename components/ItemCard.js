@@ -3,7 +3,8 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { viewItem, removeItem, saveItem } from '../reducers/actions'
 import { Card, Image, Button } from 'semantic-ui-react'
-import RateSave from './RateSave.js'
+import RateSave from './RateSave'
+import themes from '../constants/thems'
 
 
 export class ItemCard extends Component {
@@ -42,7 +43,7 @@ export class ItemCard extends Component {
     if (!this.props.similar) {
       viewAction = <Button
               floated='right'
-              color='pink'
+              color={themes.PRIMARY_COLOR}
               content='View'
               onClick={this.handleClickView}
             />
