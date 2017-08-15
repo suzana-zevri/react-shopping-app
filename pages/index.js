@@ -1,6 +1,7 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
-import { initStore, loadItems, loadHitlist, getItems } from '../reducers/main'
+import { initStore } from '../reducers/main'
+import { loadItems, loadHitlist, getItems } from '../reducers/actions'
 import withRedux from 'next-redux-wrapper'
 import Head from 'next/head';
 import { getDresses, getHitlist } from '../dataservice/api'

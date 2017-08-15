@@ -1,21 +1,22 @@
 import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { viewItem, removeItem, saveItem } from '../reducers/main'
-import { Card, Icon, Image, Button } from 'semantic-ui-react'
+import { viewItem, removeItem, saveItem } from '../reducers/actions'
+import { Card, Image, Button } from 'semantic-ui-react'
+import RateSave from './RateSave.js'
+
 
 export class ItemCard extends Component {
 
   state = { currentImage: this.props.item.thumbnails[1] }
 
-
   handleMouseOver = () => {
-     let currentImage = this.props.item.thumbnails[0]
+     const currentImage = this.props.item.thumbnails[0]
      this.setState({currentImage})
   }
 
   handleMouseOut = () => {
-     let currentImage = this.props.item.thumbnails[1]
+     const currentImage = this.props.item.thumbnails[1]
      this.setState({currentImage})
   }
 
@@ -24,48 +25,45 @@ export class ItemCard extends Component {
     this.props.viewItem(id)
   }
 
-  handleClickRemove = () => {
+  handleSave = (event, trigger) => {
+    const id = this.props.item.id
+    this.props.saveItem(id, trigger.rating)
+  }
+
+  handleRemove = (value) => {
     const id = this.props.item.id
     this.props.removeItem(id)
   }
 
-  handleClickSave = () => {
-    const id = this.props.item.id
-    this.props.saveItem(id)
-  }
-  
   render () {
     const item = this.props.item
 
-    let itemAction = null
-    if (item.saved) {
-      itemAction = <a onClick={this.handleClickRemove}>
-        <Button basic color='red'>Remove</Button>
-      </a>
-    } else {
-      itemAction = <a onClick={this.handleClickSave}><Button basic color='blue'>Save</Button></a>
-    }
-
     return (
       <Card>
-        {this.props.itemSelected}
-        <div onMouseOver={this.handleMouseOver} onMouseOut={this.handleMouseOut}>
+        <div
+          onMouseOver={this.handleMouseOver}
+          onMouseOut={this.handleMouseOut}
+        >
           <Image src={this.state.currentImage} />
         </div>
         <Card.Content>
-          <Card.Header> {item.name} </Card.Header>
+          <Card.Header>{item.name}</Card.Header>
           <Card.Meta>{item.brand_name}</Card.Meta>
           <Card.Description>{item.price}€</Card.Description>
         </Card.Content>
         <Card.Content extra>
-          {itemAction}
-          <a onClick={this.handleClickView}>
-            <Button 
-              floated='right' 
-              color='pink' 
-              content='View' 
-            />
-          </a>
+          <RateSave
+            saved={item.saved}
+            rating={item.rating}
+            onSave={this.handleSave}
+            onRemove={this.handleRemove}
+          />
+          <Button
+            floated='right'
+            color='pink'
+            content='View'
+            onClick={this.handleClickView}
+          />
         </Card.Content>
       </Card>
     )
