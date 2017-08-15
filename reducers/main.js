@@ -18,7 +18,6 @@ export const reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case actionTypes.LOAD_ITEMS:
-      console.log('LOAD items')
       items = action.items.map( item => {
         let foundIndex = map('dress_id', state.hitlist).indexOf(item.id)
         if (foundIndex > -1) {
@@ -39,6 +38,13 @@ export const reducer = (state = initialState, action) => {
     case actionTypes.LOAD_ITEM:
       items = state.items.map( item => {
         if (item.id === action.id) item = Object.assign({}, item, { details: action.details })
+        return item
+      })
+      return Object.assign({}, state, {items: items})
+    
+    case actionTypes.LOAD_SIMILAR_ITEMS:
+      items = state.items.map( item => {
+        if (item.id === action.id) item = Object.assign({}, item, { similar: action.items })
         return item
       })
       return Object.assign({}, state, {items: items})

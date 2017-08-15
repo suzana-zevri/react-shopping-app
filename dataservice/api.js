@@ -31,7 +31,7 @@ const getSimilarDresses = async (id, type = 'appearance') => {
   const endpoint = `${endpointBase}/similar/${type}/${id}`
   const res = await fetch(endpoint)
   const json = await res.json()
-  return json
+  return  {items: json.items}
 }
 
 const getHitlist = async () => {

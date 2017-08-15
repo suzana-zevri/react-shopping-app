@@ -37,6 +37,16 @@ export class ItemCard extends Component {
 
   render () {
     const item = this.props.item
+    let viewAction = null
+
+    if (!this.props.similar) {
+      viewAction = <Button
+              floated='right'
+              color='pink'
+              content='View'
+              onClick={this.handleClickView}
+            />
+    }
 
     return (
       <Card>
@@ -47,7 +57,7 @@ export class ItemCard extends Component {
           <Image src={this.state.currentImage} />
         </div>
         <Card.Content>
-          <Card.Header>{item.name}</Card.Header>
+          <h4> {item.name} </h4>
           <Card.Meta>{item.brand_name}</Card.Meta>
           <Card.Description>{item.price}€</Card.Description>
         </Card.Content>
@@ -58,12 +68,8 @@ export class ItemCard extends Component {
             onSave={this.handleSave}
             onRemove={this.handleRemove}
           />
-          <Button
-            floated='right'
-            color='pink'
-            content='View'
-            onClick={this.handleClickView}
-          />
+          {itemAction}
+          {viewAction}
         </Card.Content>
       </Card>
     )

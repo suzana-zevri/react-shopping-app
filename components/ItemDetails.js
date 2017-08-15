@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { closeItem, removeItem, saveItem, getSimilar} from '../reducers/actions'
 import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label, Divider } from 'semantic-ui-react'
 import RateSave from './RateSave.js'
+import Similar from './Similar.js'
 
 export class ItemDetail extends Component {
 
@@ -35,13 +36,17 @@ export class ItemDetail extends Component {
   render () {
     const item = this.props.item
     const details = item.details
+    const similar = item.similar
     let content = null
+    let similarItems = null
 
-    console.log(item)
+    if(similar) {
+      similarItems = <Similar items={similar} />
+    }
 
     if (details) {
       let gallery = null
-      if (details.images.length){
+      if (details.images && details.images.length){
         gallery = <Image wrapped size='medium' src={details.images[0]} />
       }
 
@@ -65,9 +70,11 @@ export class ItemDetail extends Component {
               onRemove={this.handleRemove}
             />
             <Divider hidden />
-            <Button onClick={this.handleGetSimilar}>
-              Similar dresses
+            <Button onClick={this.handleGetSimilar} color='violet'>
+              Check similar dresses
             </Button>
+            <Divider hidden />
+            {similarItems}
           </Modal.Description>
         </Modal.Content>
     } else {
@@ -81,10 +88,11 @@ export class ItemDetail extends Component {
         onClose={this.handleClose}
         closeOnEscape={true}
         closeOnRootNodeClick={true}
+        size='large'
       >
         {content}
         <Modal.Actions>
-          <Button onClick={this.handleClose} color='black'>
+          <Button onClick={this.handleClose} color='grey'>
              Close details
           </Button>
         </Modal.Actions>
