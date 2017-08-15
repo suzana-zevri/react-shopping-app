@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon, Label, Menu, Divider } from 'semantic-ui-react'
 const customStyle = { position: 'fixed', zIndex: 2000}
-import themes from '../constants/thems'
+import theme from '../constants/theme'
 
 
 const RightNavigation = ({size}) => (
@@ -9,7 +9,7 @@ const RightNavigation = ({size}) => (
     <Divider hidden />
     <Menu.Item as='a' >
       <Icon name='cart'/>
-      <Label color={thems.PRIMARY_COLOR} floating>{size}</Label>
+      <Label color={theme.PRIMARY_COLOR} floating>{size}</Label>
     </Menu.Item>
   </Menu>
 )

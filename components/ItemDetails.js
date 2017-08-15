@@ -5,7 +5,7 @@ import { closeItem, removeItem, saveItem, getSimilar} from '../reducers/actions'
 import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label, Divider } from 'semantic-ui-react'
 import RateSave from './RateSave'
 import Similar from './Similar'
-import themes from '../constants/thems'
+import theme from '../constants/theme'
 
 export class ItemDetail extends Component {
 
@@ -42,7 +42,7 @@ export class ItemDetail extends Component {
     let similarItems = null
 
     if(similar) {
-      similarItems = <Similar items={similar} />
+      similarItems = <Similar items={similar}/>
     }
 
     if (details) {
@@ -60,7 +60,7 @@ export class ItemDetail extends Component {
               <h2>{item.name}</h2>
               <Header.Subheader>{details.brand.name}</Header.Subheader>
             </Header>
-            <Label as='a' color={themes.PRIMARY_COLOR}>Price: {details.price}€</Label>
+            <Label as='a' color={theme.PRIMARY_COLOR}>Price: {details.price}€</Label>
             <Label as='a' color={details.color.toLowerCase()} tag>Color {details.color}</Label>
             <Label as='a' tag>{details.season}</Label>
             <Divider hidden />
@@ -71,7 +71,7 @@ export class ItemDetail extends Component {
               onRemove={this.handleRemove}
             />
             <Divider hidden />
-            <Button onClick={this.handleGetSimilar} color={themes.SECONDARY_COLOR}>
+            <Button onClick={this.handleGetSimilar} color={theme.SECONDARY_COLOR}>
               Check similar dresses
             </Button>
             <Divider hidden />
