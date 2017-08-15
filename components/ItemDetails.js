@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { closeItem, removeItem, saveItem, getSimilar} from '../reducers/main'
 import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label, Divider } from 'semantic-ui-react'
 
-class ItemDetail extends Component {
+export class ItemDetail extends Component {
 
   state = { modalOpen: this.props.modalOpen }
 

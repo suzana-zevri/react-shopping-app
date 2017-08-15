@@ -28,7 +28,7 @@ const ErrorNotification = (error) => (
   </Message>
 )
 
-class App extends React.Component {
+export class App extends React.Component {
 
   state = { activePage: 1 }
 

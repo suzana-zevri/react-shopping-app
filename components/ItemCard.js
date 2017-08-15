@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux'
 import { viewItem, removeItem, saveItem } from '../reducers/main'
 import { Card, Icon, Image, Button } from 'semantic-ui-react'
 
-class ItemCard extends Component {
+export class ItemCard extends Component {
 
   state = { currentImage: this.props.item.thumbnails[1] }
 
