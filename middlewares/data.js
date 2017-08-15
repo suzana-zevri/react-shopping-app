@@ -25,7 +25,7 @@ const dataMiddleware = store => next => async (action) => {
       break
 
     case actionTypes.SAVE_ITEM:
-      const savedItem = await addToHitlist(action.id)
+      const savedItem = await addToHitlist(action.id, action.rating)
       const details = JSON.parse(savedItem)
       if (details.dress_id){
         next({ type: actionTypes.SAVE_ITEM_HITLIST, id:action.id, details })

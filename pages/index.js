@@ -52,6 +52,7 @@ export class App extends React.Component {
   render () {
     let notification = null
     if (this.props.error) notification = <ErrorNotification error={this.props.error} />
+    console.log(this.props.hitlist)
 
     return (
       <section>

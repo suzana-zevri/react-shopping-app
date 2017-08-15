@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { closeItem, removeItem, saveItem, getSimilar} from '../reducers/main'
 import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label, Divider } from 'semantic-ui-react'
+import RateSave from './RateSave.js'
 
 export class ItemDetail extends Component {
 
@@ -21,17 +22,33 @@ export class ItemDetail extends Component {
     this.props.getSimilar(id)
   }
 
+  handleSave = (event, trigger) => {
+    const id = this.props.item.id
+    this.props.saveItem(id, trigger.rating)
+  }
+
+  handleRemove = (value) => {
+    const id = this.props.item.id
+    this.props.removeItem(id)
+  }
 
   render () {
     const item = this.props.item
     const details = item.details
-    console.log(details)
-
     let content = null
+
+    console.log(item)
+    
     if (details) {
+      let gallery = null
+      if (details.images.length){
+        gallery = <Image wrapped size='medium' src={details.images[0]} />
+      }
+      
+
       content =
         <Modal.Content image scrolling>
-          <Image wrapped size='medium' src={details.images[0]} />
+          {gallery}
           <Modal.Description>
             <Header>
               <h2>{item.name}</h2>
@@ -41,7 +58,14 @@ export class ItemDetail extends Component {
             <Label as='a' tag>{details.season}</Label>
             <Label as='a' color='pink'>Price: {details.price}€</Label>
             <Divider hidden />
-            <Button onClick={this.handleGetSimilar} color='pink'>
+            <RateSave
+              saved={item.saved}
+              rating={item.rating}
+              onSave={this.handleSave} 
+              onRemove={this.handleRemove}
+            />
+            <Divider hidden />
+            <Button onClick={this.handleGetSimilar}>
               Similar dresses
             </Button>
           </Modal.Description>

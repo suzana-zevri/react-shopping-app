@@ -20,8 +20,13 @@ export const reducer = (state = initialState, action) => {
   switch (action.type) {
 
     case actionTypes.LOAD_ITEMS:
+      console.log('LOAD items')
       items = action.items.map( item => {
-        if (map('dress_id', state.hitlist).indexOf(item.id) > -1) item.saved = true
+        let foundIndex = map('dress_id', state.hitlist).indexOf(item.id)
+        if (foundIndex > -1) {
+          item.saved = true
+          item.rating = state.hitlist[foundIndex].rating
+        }
         return item
       })
       return Object.assign({}, state, {items: items, totalPages: action.totalPages})
@@ -42,14 +47,20 @@ export const reducer = (state = initialState, action) => {
 
     case actionTypes.REMOVE_ITEM:
       items = state.items.map( item => {
-        if (item.id === action.id) item.saved = false
+        if (item.id === action.id){
+          item.saved = false
+          item.rating = 0
+        }
         return item
       })
       return Object.assign({}, state, {items: items})
 
     case actionTypes.SAVE_ITEM:
       items = state.items.map( item => {
-        if (item.id === action.id) item.saved = true
+        if (item.id === action.id){
+          item.saved = true
+          item.rating = action.rating
+        }
         return item
       })
       return Object.assign({}, state, {items: items})
@@ -98,8 +109,8 @@ export const removeItem = (id) => dispatch => {
   return dispatch({ type: actionTypes.REMOVE_ITEM, id: id })
 }
 
-export const saveItem = (id) => dispatch => {
-  return dispatch({ type: actionTypes.SAVE_ITEM, id })
+export const saveItem = (id, rating) => dispatch => {
+  return dispatch({ type: actionTypes.SAVE_ITEM, id, rating })
 }
 
 export const rateItem = (id, rating) => dispatch => {

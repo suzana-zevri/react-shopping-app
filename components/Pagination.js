@@ -18,7 +18,7 @@ const Pagination = ({activePage, onChange, totalPages}) => {
     let pageNumber = activePage + 1
     onChange(pageNumber)
   }
-  
+
   return (
     <Menu pagination>
       <Menu.Item name='prev' onClick={handlePrevClick} />
