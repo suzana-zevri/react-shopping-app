@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { viewItem, removeItem, saveItem } from '../reducers/actions'
-import { Card, Image, Button } from 'semantic-ui-react'
+import { Card, Image, Button, Icon } from 'semantic-ui-react'
 import RateSave from './RateSave'
 import theme from '../constants/theme'
 
@@ -38,15 +38,15 @@ export class ItemCard extends Component {
 
   render () {
     const item = this.props.item
-    let viewAction = null
+    let rateAction = null
 
     if (!this.props.similar) {
-      viewAction = <Button
-              floated='right'
-              color={theme.PRIMARY_COLOR}
-              content='View'
-              onClick={this.handleClickView}
-            />
+      rateAction = <RateSave
+            saved={item.saved}
+            rating={item.rating}
+            onSave={this.handleSave}
+            onRemove={this.handleRemove}
+          />
     }
 
     return (
@@ -63,14 +63,13 @@ export class ItemCard extends Component {
           <Card.Description>{item.price}€</Card.Description>
         </Card.Content>
         <Card.Content extra>
-          <RateSave
-            saved={item.saved}
-            rating={item.rating}
-            onSave={this.handleSave}
-            onRemove={this.handleRemove}
-          />
-          {itemAction}
-          {viewAction}
+          {rateAction}
+          <Button
+            floated='right'
+            color={theme.PRIMARY_COLOR}
+            onClick={this.handleClickView}
+            content='view'
+            />
         </Card.Content>
       </Card>
     )

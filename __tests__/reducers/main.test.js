@@ -9,7 +9,8 @@ describe('Main reducer', () => {
     const expected = {
       items: [],
       hitlist: [],
-      totalPages: 0
+      totalPages: 0,
+      selected: null
     }
     expect(actual).to.deep.equal(expected)
   })
@@ -29,7 +30,7 @@ describe('Main reducer', () => {
       type: actionTypes.VIEW_ITEM,
       id: 'MJ021C01A-K11'
     })
-    const expected = { items: [Object.assign(head(fixtureItems), {selected: true}) ]}    
+    const expected = { items: [fixtureItems], selected: fixtureItems }    
     expect(actual).to.deep.equal(expected)
   })
 })

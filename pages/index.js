@@ -3,10 +3,11 @@ import { bindActionCreators } from 'redux'
 import { initStore } from '../reducers/main'
 import { loadItems, loadHitlist, getItems } from '../reducers/actions'
 import withRedux from 'next-redux-wrapper'
-import Head from 'next/head';
+import Head from 'next/head'
 import { getDresses, getHitlist } from '../dataservice/api'
 import { Grid, Message, Divider } from 'semantic-ui-react'
 import ItemList from '../components/ItemList'
+import ItemDetails from '../components/ItemDetails'
 import LeftNavigation from '../components/LeftNavigation'
 import RightNavigation from '../components/RightNavigation'
 
@@ -21,7 +22,7 @@ const PageHead = () => (
   </Head>
 )
 
-const ErrorNotification = (error) => (
+const ErrorNotification = ({error}) => (
   <Message negative>
     <Message.Header>We're very sorry, there was a connection error while loading the items.</Message.Header>
     <p>Please reload the page to try again.</p>
@@ -52,8 +53,9 @@ export class App extends React.Component {
 
   render () {
     let notification = null
+    let selectedItem = null
     if (this.props.error) notification = <ErrorNotification error={this.props.error} />
-    console.log(this.props.hitlist)
+    if (this.props.selected) selectedItem = <ItemDetails item={this.props.selected} modalOpen={true} />
 
     return (
       <section>
@@ -67,6 +69,7 @@ export class App extends React.Component {
               <Grid.Column width={14} style={{ minHeight: '100vh' }}>
                 <Divider hidden />
                 {notification}
+                {selectedItem}
                 <ItemList
                   items={this.props.items}
                   totalPages={this.props.totalPages}
@@ -85,7 +88,9 @@ export class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ items, totalPages, hitlist }) => ({ items, totalPages, hitlist })
+const mapStateToProps = ({ items, totalPages, hitlist, selected }) => (
+  { items, totalPages, hitlist, selected }
+)
 
 const mapDispatchToProps = dispatch => {
   return {

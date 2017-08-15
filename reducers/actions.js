@@ -1,3 +1,6 @@
+import actionTypes from  '../constants/actions'
+
+
 export const viewItem = (id) => dispatch => {
   return dispatch({ type: actionTypes.VIEW_ITEM, id: id })
 }

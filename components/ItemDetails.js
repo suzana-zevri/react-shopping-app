@@ -36,6 +36,8 @@ export class ItemDetail extends Component {
 
   render () {
     const item = this.props.item
+    if (!item) return null 
+
     const details = item.details
     const similar = item.similar
     let content = null

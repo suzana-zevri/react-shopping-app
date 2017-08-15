@@ -8,12 +8,14 @@ import { map } from 'lodash/fp'
 const initialState = {
   items: [],
   hitlist: [],
-  totalPages: 0
+  totalPages: 0,
+  selected: null
 }
 
 export const reducer = (state = initialState, action) => {
   let items = []
   let hitlist = []
+  let selected = null
 
   switch (action.type) {
 
@@ -40,14 +42,16 @@ export const reducer = (state = initialState, action) => {
         if (item.id === action.id) item = Object.assign({}, item, { details: action.details })
         return item
       })
-      return Object.assign({}, state, {items: items})
+      selected = Object.assign({}, state.selected, { details: action.details })
+      return Object.assign({}, state, {items: items}, {selected: selected})
     
     case actionTypes.LOAD_SIMILAR_ITEMS:
       items = state.items.map( item => {
         if (item.id === action.id) item = Object.assign({}, item, { similar: action.items })
         return item
       })
-      return Object.assign({}, state, {items: items})
+      selected = Object.assign({}, state.selected, { similar: action.items })
+      return Object.assign({}, state, {items: items}, {selected: selected})
 
     case actionTypes.REMOVE_ITEM:
       items = state.items.map( item => {
@@ -57,7 +61,12 @@ export const reducer = (state = initialState, action) => {
         }
         return item
       })
-      return Object.assign({}, state, {items: items})
+      selected = state.selected
+      if (selected && selected.id === action.id) {
+        selected.saved = false
+        selected.rating = 0
+      }
+      return Object.assign({}, state, {items: items}, {selected: selected})
 
     case actionTypes.SAVE_ITEM:
       items = state.items.map( item => {
@@ -67,7 +76,13 @@ export const reducer = (state = initialState, action) => {
         }
         return item
       })
-      return Object.assign({}, state, {items: items})
+      selected = state.selected
+      if (selected && selected.id === action.id) {
+        selected.saved = true
+        selected.rating = action.rating
+      }
+
+      return Object.assign({}, state, {items: items}, {selected: selected})
 
     case actionTypes.SAVE_ITEM_HITLIST:
       hitlist = state.hitlist.concat([action.details])
@@ -80,17 +95,13 @@ export const reducer = (state = initialState, action) => {
 
     case actionTypes.VIEW_ITEM:
       items = state.items.map( item => {
-        if (item.id === action.id) item.selected = true
+        if (item.id === action.id) selected = item
         return item
       })
-      return  Object.assign({}, state, {items: items})
+      return  Object.assign({}, state, {selected: selected})
 
     case actionTypes.CLOSE_ITEM:
-      items = state.items.map( item => {
-        if (item.id === action.id) item.selected = false
-        return item
-      })
-      return  Object.assign({}, state, {items: items})
+      return  Object.assign({}, state, {selected: null})
 
     case actionTypes.RATE_ITEM:
       return state

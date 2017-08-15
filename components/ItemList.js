@@ -5,6 +5,14 @@ import Pagination from './Pagination'
 
 export default ({items, activePage, onPageChange, totalPages}) => {
   if (!items.length) return null
+  let itemSelected = null
+
+
+      // if (item.selected) {
+      //       return (
+      //         <ItemDetails item={item} modalOpen={true} />
+      //       )
+      //     }
 
   return (
     <div>
@@ -13,17 +21,12 @@ export default ({items, activePage, onPageChange, totalPages}) => {
         activePage={activePage}
         onChange={onPageChange}
       />
-      <Divider />
-      <Card.Group itemsPerRow='five' stackable>
-        {items.map( item => {
-          let itemSelected = null
-          if (item.selected) {
-            itemSelected = <ItemDetails item={item} modalOpen={true} />
-          }
-          return (
-            <ItemCard item={item} key={item.id} itemSelected={itemSelected} />
+      <Divider /> 
+      <Card.Group itemsPerRow='four' stackable>
+        {items.map( item => (
+            <ItemCard item={item} key={item.id} />
           )
-        })}
+        )}
       </Card.Group>
       <Divider />
       <Pagination
