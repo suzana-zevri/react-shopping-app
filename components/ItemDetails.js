@@ -69,7 +69,7 @@ export class ItemDetail extends Component {
               onRemove={this.handleRemove}
             />
             <Divider hidden />
-            <Button onClick={this.handleGetSimilar}>
+            <Button onClick={this.handleGetSimilar} color='violet'>
               Check similar dresses
             </Button>
             <Divider hidden />
@@ -92,7 +92,7 @@ export class ItemDetail extends Component {
       >
         {content}
         <Modal.Actions>
-          <Button onClick={this.handleClose} color='black'>
+          <Button onClick={this.handleClose} color='grey'>
              Close details
           </Button>
         </Modal.Actions>
