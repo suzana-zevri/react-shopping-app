@@ -21,7 +21,9 @@ const dataMiddleware = store => next => async (action) => {
 
     case actionTypes.GET_SIMILAR:
       const similar= await getSimilarDresses(action.id)
-      next({ type: actionTypes.LOAD_SIMILAR_ITEMS, id:action.id, similar })
+      if (similar.items){
+        next({ type: actionTypes.LOAD_SIMILAR_ITEMS, id:action.id, items:similar.items })
+      }
       break
 
     case actionTypes.SAVE_ITEM:

@@ -10,7 +10,7 @@ export default ({items, activePage, onPageChange, totalPages}) => {
     <div>
       <Pagination totalPages={totalPages} activePage={activePage} onChange={onPageChange}/>
       <Divider />
-      <Card.Group itemsPerRow='four' stackable>
+      <Card.Group itemsPerRow='five' stackable>
         {items.map( item => {
           let itemSelected = null
           if (item.selected) {

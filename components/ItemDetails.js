@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux'
 import { closeItem, removeItem, saveItem, getSimilar} from '../reducers/main'
 import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label, Divider } from 'semantic-ui-react'
 import RateSave from './RateSave.js'
+import Similar from './Similar.js'
 
 export class ItemDetail extends Component {
 
@@ -35,13 +36,16 @@ export class ItemDetail extends Component {
   render () {
     const item = this.props.item
     const details = item.details
+    const similar = item.similar
     let content = null
-
-    console.log(item)
+    let similarItems = null
+    if(similar) {
+      similarItems = <Similar items={similar} />
+    }
     
     if (details) {
       let gallery = null
-      if (details.images.length){
+      if (details.images && details.images.length){
         gallery = <Image wrapped size='medium' src={details.images[0]} />
       }
       
@@ -66,8 +70,10 @@ export class ItemDetail extends Component {
             />
             <Divider hidden />
             <Button onClick={this.handleGetSimilar}>
-              Similar dresses
+              Check similar dresses
             </Button>
+            <Divider hidden />
+            {similarItems}
           </Modal.Description>
          
         </Modal.Content>
@@ -82,6 +88,7 @@ export class ItemDetail extends Component {
         onClose={this.handleClose}
         closeOnEscape={true}
         closeOnRootNodeClick={true}
+        size='large'
       >
         {content}
         <Modal.Actions>

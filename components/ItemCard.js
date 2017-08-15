@@ -38,12 +38,23 @@ export class ItemCard extends Component {
     const item = this.props.item
 
     let itemAction = null
+    let viewAction = null
     if (item.saved) {
       itemAction = <a onClick={this.handleClickRemove}>
         <Button basic color='red'>Remove</Button>
       </a>
     } else {
       itemAction = <a onClick={this.handleClickSave}><Button basic color='blue'>Save</Button></a>
+    }
+
+    if (!this.props.similar) {
+      viewAction = <a onClick={this.handleClickView}>
+            <Button 
+              floated='right' 
+              color='pink' 
+              content='View' 
+            />
+          </a>
     }
 
     return (
@@ -53,19 +64,13 @@ export class ItemCard extends Component {
           <Image src={this.state.currentImage} />
         </div>
         <Card.Content>
-          <Card.Header> {item.name} </Card.Header>
+          <h4> {item.name} </h4>
           <Card.Meta>{item.brand_name}</Card.Meta>
           <Card.Description>{item.price}€</Card.Description>
         </Card.Content>
         <Card.Content extra>
           {itemAction}
-          <a onClick={this.handleClickView}>
-            <Button 
-              floated='right' 
-              color='pink' 
-              content='View' 
-            />
-          </a>
+          {viewAction}
         </Card.Content>
       </Card>
     )
