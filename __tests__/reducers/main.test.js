@@ -29,8 +29,8 @@ describe('Main reducer', () => {
     const actual = reducer({items: fixtureItems}, {
       type: actionTypes.VIEW_ITEM,
       id: 'MJ021C01A-K11'
-    })
-    const expected = { items: [fixtureItems], selected: fixtureItems }    
+    })    
+    const expected = { items: fixtureItems, selected: head(fixtureItems) }    
     expect(actual).to.deep.equal(expected)
   })
 })

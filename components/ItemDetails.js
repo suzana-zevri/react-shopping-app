@@ -2,14 +2,14 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { closeItem, removeItem, saveItem, getSimilar} from '../reducers/actions'
-import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label, Divider } from 'semantic-ui-react'
+import { Modal, Icon, Reveal, Image, Button, Header, Loader, Dimmer, Label, Divider, Segment } from 'semantic-ui-react'
 import RateSave from './RateSave'
 import Similar from './Similar'
 import theme from '../constants/theme'
 
 export class ItemDetail extends Component {
 
-  state = { modalOpen: this.props.modalOpen }
+  state = { modalOpen: this.props.modalOpen, currentImageIndex: 0, imageCount: 0 }
 
   handleClose = () => {
     const id = this.props.item.details.id
@@ -34,23 +34,27 @@ export class ItemDetail extends Component {
 
   render () {
     const item = this.props.item
-
-    console.log(item)
     if (!item) return null 
 
     const details = item.details
     const similar = item.similar
     let content = null
     let similarItems = null
+    let getSimilarAction = null
 
     if(similar) {
       similarItems = <Similar items={similar}/>
+    } else {
+      similarItems = <Button onClick={this.handleGetSimilar} color={theme.SECONDARY_COLOR}>
+            Check similar dresses
+          </Button>
     }
 
     if (details) {
       let gallery = null
       if (details.images && details.images.length){
-        gallery = <Image wrapped size='medium' src={details.images[0]} />
+        let imageSrc = details.images[1]
+        gallery = <Image src={imageSrc} size='medium' wrapped/>
       }
 
 
@@ -62,6 +66,7 @@ export class ItemDetail extends Component {
               <h2>{details.name}</h2>
               <Header.Subheader>{details.brand.name}</Header.Subheader>
             </Header>
+            
             <Label as='a' color={theme.PRIMARY_COLOR}>Price: {details.price}€</Label>
             <Label as='a' color={details.color.toLowerCase()} tag>Color {details.color}</Label>
             <Label as='a' tag>{details.season}</Label>
@@ -72,10 +77,6 @@ export class ItemDetail extends Component {
               onSave={this.handleSave}
               onRemove={this.handleRemove}
             />
-            <Divider hidden />
-            <Button onClick={this.handleGetSimilar} color={theme.SECONDARY_COLOR}>
-              Check similar dresses
-            </Button>
             <Divider hidden />
             {similarItems}
           </Modal.Description>

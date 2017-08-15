@@ -2,24 +2,13 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { viewItem, removeItem, saveItem } from '../reducers/actions'
-import { Card, Image, Button, Icon } from 'semantic-ui-react'
+import { Card, Image, Button, Icon, Reveal } from 'semantic-ui-react'
 import RateSave from './RateSave'
 import theme from '../constants/theme'
 
 
 export class ItemCard extends Component {
 
-  state = { currentImage: this.props.item.thumbnails[1] }
-
-  handleMouseOver = () => {
-     const currentImage = this.props.item.thumbnails[0]
-     this.setState({currentImage})
-  }
-
-  handleMouseOut = () => {
-     const currentImage = this.props.item.thumbnails[1]
-     this.setState({currentImage})
-  }
 
   handleClickView = () => {
     const id = this.props.item.id
@@ -51,13 +40,14 @@ export class ItemCard extends Component {
 
     return (
       <Card>
-        <a
-          onMouseOver={this.handleMouseOver}
-          onMouseOut={this.handleMouseOut}
-          onClick={this.handleClickView}
-        >
-          <Image src={this.state.currentImage} width="100%" />
-        </a>
+        <Reveal animated='small fade' onClick={this.handleClickView}>
+          <Reveal.Content hidden>
+            <Image src={this.props.item.thumbnails[0]} />
+          </Reveal.Content>
+          <Reveal.Content visible>
+            <Image src={this.props.item.thumbnails[1]} />
+          </Reveal.Content>
+        </Reveal>
         <Card.Content>
           <h4> {item.name} </h4>
           <Card.Meta>{item.brand_name}</Card.Meta>
