@@ -51,12 +51,13 @@ export class ItemCard extends Component {
 
     return (
       <Card>
-        <div
+        <a
           onMouseOver={this.handleMouseOver}
           onMouseOut={this.handleMouseOut}
+          onClick={this.handleClickView}
         >
-          <Image src={this.state.currentImage} />
-        </div>
+          <Image src={this.state.currentImage} width="100%" />
+        </a>
         <Card.Content>
           <h4> {item.name} </h4>
           <Card.Meta>{item.brand_name}</Card.Meta>

@@ -12,30 +12,30 @@ export class ItemDetail extends Component {
   state = { modalOpen: this.props.modalOpen }
 
   handleClose = () => {
-    const id = this.props.item.id
-    this.setState({
-      modalOpen: false,
-    })
+    const id = this.props.item.details.id
+    this.setState({ modalOpen: false })
     this.props.closeItem(id)
   }
 
   handleGetSimilar = () => {
-    const id = this.props.item.id
+    const id = this.props.item.details.id
     this.props.getSimilar(id)
   }
 
   handleSave = (event, trigger) => {
-    const id = this.props.item.id
+    const id = this.props.item.details.id
     this.props.saveItem(id, trigger.rating)
   }
 
   handleRemove = (value) => {
-    const id = this.props.item.id
+    const id = this.props.item.details.id
     this.props.removeItem(id)
   }
 
   render () {
     const item = this.props.item
+
+    console.log(item)
     if (!item) return null 
 
     const details = item.details
@@ -59,7 +59,7 @@ export class ItemDetail extends Component {
           {gallery}
           <Modal.Description>
             <Header>
-              <h2>{item.name}</h2>
+              <h2>{details.name}</h2>
               <Header.Subheader>{details.brand.name}</Header.Subheader>
             </Header>
             <Label as='a' color={theme.PRIMARY_COLOR}>Price: {details.price}€</Label>

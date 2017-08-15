@@ -8,12 +8,6 @@ export default ({items, activePage, onPageChange, totalPages}) => {
   let itemSelected = null
 
 
-      // if (item.selected) {
-      //       return (
-      //         <ItemDetails item={item} modalOpen={true} />
-      //       )
-      //     }
-
   return (
     <div>
       <Pagination

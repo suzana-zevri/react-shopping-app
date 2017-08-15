@@ -62,7 +62,7 @@ export const reducer = (state = initialState, action) => {
         return item
       })
       selected = state.selected
-      if (selected && selected.id === action.id) {
+      if (selected && (selected.id === action.id || selected.details.id === action.id )) {
         selected.saved = false
         selected.rating = 0
       }
@@ -77,11 +77,10 @@ export const reducer = (state = initialState, action) => {
         return item
       })
       selected = state.selected
-      if (selected && selected.id === action.id) {
+      if (selected && (selected.id === action.id || selected.details.id === action.id )) {
         selected.saved = true
         selected.rating = action.rating
       }
-
       return Object.assign({}, state, {items: items}, {selected: selected})
 
     case actionTypes.SAVE_ITEM_HITLIST:

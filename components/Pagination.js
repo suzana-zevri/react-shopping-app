@@ -2,7 +2,6 @@ import React from 'react'
 import { Icon, Menu} from 'semantic-ui-react'
 
 const Pagination = ({activePage, onChange, totalPages}) => {
-  console.log(activePage)
 
   let handleItemClick = (event) => {
     let pageNumber = event.target.text

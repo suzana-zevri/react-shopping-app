@@ -30,7 +30,10 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "api:stop": "docker stop shopapp",
+    "api:start": "docker run --rm -d -p 8080:8080 --name shopapp fashionablecontainers/dress-hitlist-backend:global-session",
+    "open": "open http://localhost:3000"
   },
   "repository": {
     "type": "git",
