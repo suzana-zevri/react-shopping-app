@@ -1,4 +1,4 @@
-import {getDress, addToHitlist, removeFromHitlist} from  '../dataservice/api'
+import {getDress, getDresses, addToHitlist, removeFromHitlist, getSimilarDresses} from  '../dataservice/api'
 import actionTypes from  '../constants/actions'
 
 const dataMiddleware = store => next => async (action) => {
@@ -12,6 +12,11 @@ const dataMiddleware = store => next => async (action) => {
     case actionTypes.VIEW_ITEM:
       const item = await getDress(action.id)
       next({ type: actionTypes.LOAD_ITEM, id:action.id, details: item })
+      break
+    
+    case actionTypes.GET_ITEMS:
+      const {items, totalPages} = await getDresses(action.pageSize, action.pageNum)
+      next({ type: actionTypes.LOAD_ITEMS, items, totalPages })
       break
 
     case actionTypes.GET_SIMILAR:

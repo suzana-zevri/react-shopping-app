@@ -17,7 +17,7 @@ const getDresses = async (pageSize = 50, pageNum = 0) => {
   const endpoint = `${endpointBase}/dresses?pageSize=${pageSize}&pageNum=${pageNum}`
   const res = await fetch(endpoint)
   const json = await res.json()
-  return {items: json.items, pages: json.totalPages}
+  return {items: json.items, totalPages: json.total_pages}
 }
 
 const getDress = async (id) => {
@@ -27,8 +27,8 @@ const getDress = async (id) => {
   return json
 }
 
-const getSimilarDresses = async (id, type) => {
-  const endpoint = `${endpointBase}/similar/${id}`
+const getSimilarDresses = async (id, type = 'appearance') => {
+  const endpoint = `${endpointBase}/similar/${type}/${id}`
   const res = await fetch(endpoint)
   const json = await res.json()
   return json
@@ -68,5 +68,6 @@ export {
   getDress,
   getHitlist,
   addToHitlist,
-  removeFromHitlist
+  removeFromHitlist,
+  getSimilarDresses 
 }

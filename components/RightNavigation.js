@@ -1,12 +1,11 @@
 import React from 'react'
-import { Icon, Label, Menu } from 'semantic-ui-react'
+import { Icon, Label, Menu, Divider } from 'semantic-ui-react'
 
 const RightNavigation = ({size}) => (
-  <Menu icon='labeled' vertical inverted>
-    <br/>
-    <Menu.Item as='a'>
-      <Icon name='cart' />
-      Dresses
+  <Menu icon vertical compact inverted style={{ position: 'fixed'}}>
+    <Divider hidden />
+    <Menu.Item as='a' >
+      <Icon name='cart'/>
       <Label color='pink' floating>{size}</Label>
     </Menu.Item>
   </Menu>

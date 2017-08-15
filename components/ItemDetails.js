@@ -2,7 +2,7 @@ import React, {Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { closeItem, removeItem, saveItem, getSimilar} from '../reducers/main'
-import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label } from 'semantic-ui-react'
+import { Modal, Icon, Image, Button, Header, Loader, Dimmer, Label, Divider } from 'semantic-ui-react'
 
 class ItemDetail extends Component {
 
@@ -40,10 +40,12 @@ class ItemDetail extends Component {
             <Label as='a' color={details.color.toLowerCase()} tag>Color {details.color}</Label>
             <Label as='a' tag>{details.season}</Label>
             <Label as='a' color='pink'>Price: {details.price}€</Label>
+            <Divider hidden />
+            <Button onClick={this.handleGetSimilar} color='pink'>
+              Similar dresses
+            </Button>
           </Modal.Description>
-          <Button onClick={this.handleGetSimilar} color='pink'>
-             Similar dresses
-          </Button>
+         
         </Modal.Content>
     } else {
       content = <Dimmer active><Loader active inverted/> </Dimmer>

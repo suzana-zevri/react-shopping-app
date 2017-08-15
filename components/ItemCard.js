@@ -8,6 +8,7 @@ class ItemCard extends Component {
 
   state = { currentImage: this.props.item.thumbnails[1] }
 
+
   handleMouseOver = () => {
      let currentImage = this.props.item.thumbnails[0]
      this.setState({currentImage})

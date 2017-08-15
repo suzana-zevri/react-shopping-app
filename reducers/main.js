@@ -7,7 +7,8 @@ import { map } from 'lodash/fp'
 
 const initialState = {
   items: [],
-  hitlist: []
+  hitlist: [],
+  totalPages: 0
 }
 
 
@@ -23,7 +24,7 @@ export const reducer = (state = initialState, action) => {
         if (map('dress_id', state.hitlist).indexOf(item.id) > -1) item.saved = true
         return item
       })
-      return Object.assign({}, state, {items: items})
+      return Object.assign({}, state, {items: items, totalPages: action.totalPages})
 
     case actionTypes.LOAD_HITLIST:
       let list = action.list.reduce( (prev, current) => {
@@ -109,8 +110,12 @@ export const loadItem = (id, details) => dispatch => {
   return dispatch({ type: actionTypes.LOAD_ITEMS, id, details })
 }
 
-export const loadItems = (items) => dispatch => {
-  return dispatch({ type: actionTypes.LOAD_ITEMS, items })
+export const getItems = (pageSize, pageNum) => dispatch => {
+  return dispatch({ type: actionTypes.GET_ITEMS, pageSize, pageNum })
+}
+
+export const loadItems = (items, totalPages) => dispatch => {
+  return dispatch({ type: actionTypes.LOAD_ITEMS, items, totalPages })
 }
 
 export const loadHitlist = (list) => dispatch => {

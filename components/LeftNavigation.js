@@ -2,9 +2,9 @@ import React from 'react'
 import { Icon, Menu } from 'semantic-ui-react'
 
 const LeftNavigation = () => (
-  <Menu compact icon vertical inverted>
+  <Menu compact icon vertical inverted style={{ position: 'fixed'}}>
     <Menu.Item as='a'>
-      Logo
+      <Icon name='align center' />
     </Menu.Item>
     <Menu.Item as='a'>
       <Icon name='mail' />

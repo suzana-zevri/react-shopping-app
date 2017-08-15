@@ -1,13 +1,15 @@
 import ItemCard from '../components/ItemCard'
-import { Card } from 'semantic-ui-react'
+import { Card, Divider } from 'semantic-ui-react'
 import ItemDetails from './ItemDetails'
+import Pagination from './Pagination'
 
-export default ({items}) => {
-   if (!items.length) return null
+export default ({items, activePage, onPageChange, totalPages}) => {
+  if (!items.length) return null
 
   return (
     <div>
-      <h2>All items</h2>
+      <Pagination totalPages={totalPages} activePage={activePage} onChange={onPageChange}/>
+      <Divider />
       <Card.Group itemsPerRow='four' stackable>
         {items.map( item => {
           let itemSelected = null
@@ -19,6 +21,8 @@ export default ({items}) => {
           )
         })}
       </Card.Group>
+      <Divider />
+      <Pagination totalPages={totalPages} activePage={activePage} onChange={onPageChange} />
     </div>
   )
 }
