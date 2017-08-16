@@ -47,8 +47,8 @@ export class App extends React.Component {
   }
 
   handlePageChange = (page) => {
-    this.setState({activePage: page})
     this.props.getItems(PAGE_SIZE, page)
+    this.setState({activePage: page})
   }
 
   render () {
