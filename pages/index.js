@@ -24,7 +24,7 @@ const PageHead = () => (
 
 const ErrorNotification = ({error}) => (
   <Message negative>
-    <Message.Header>We're very sorry, there was a connection error while loading the items.</Message.Header>
+    <Message.Header>We are very sorry, there was a connection error while loading the items.</Message.Header>
     <p>Please reload the page to try again.</p>
     <p>Details: {error.message} </p>
   </Message>
